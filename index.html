@@ -2,6 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Burak Can'dan Selamlar</title>
   <style>
     html, body {
@@ -95,6 +96,9 @@
       right: 20px;
       z-index: 999;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .main-image {
@@ -102,25 +106,28 @@
       height: 200px;
       border-radius: 10px;
       transition: all 0.3s ease;
+      max-width: 100%;
+      height: auto;
     }
 
     .gallery {
       display: none;
-      position: absolute;
-      bottom: 0;
-      right: 0;
+      position: relative;
       background-color: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
       padding: 10px;
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
+      display: flex;
+      overflow-x: auto; /* Yatay kaydırma */
       gap: 10px;
+      max-width: 100%;
+      width: 600px; /* Galeri genişliği */
+      height: 150px; /* Galeri yüksekliği */
     }
 
     .gallery img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
+      width: 120px;
+      height: 120px;
+      object-fit: cover; /* Resimleri düzgün yerleştir */
       border-radius: 10px;
       transition: transform 0.3s ease;
       cursor: pointer;
@@ -167,6 +174,60 @@
     .prev { left: 10px; }
     .next { right: 10px; }
 
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+      .start-button {
+        font-size: 1.5em;
+        padding: 15px 30px;
+      }
+
+      .message {
+        font-size: 2em;
+        padding: 20px 40px;
+      }
+
+      .main-image {
+        width: 150px;
+        height: 150px;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, 80px);
+        padding: 5px;
+      }
+
+      .gallery img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .start-button {
+        font-size: 1.2em;
+        padding: 10px 20px;
+      }
+
+      .message {
+        font-size: 1.5em;
+        padding: 15px 30px;
+      }
+
+      .main-image {
+        width: 120px;
+        height: 120px;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(1, 60px);
+      }
+
+      .gallery img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -195,7 +256,7 @@
   <!-- Modal -->
   <div id="modal" class="modal">
     <span class="prev" onclick="changeImage(-1)">&#10094;</span>
-    <img class="modal-content" id="modal-img" src="">
+    <img class="modal-content" id="modal-img" src="resim1.jpg">
     <span class="next" onclick="changeImage(1)">&#10095;</span>
   </div>
 
@@ -255,7 +316,7 @@
       
       // Eğer galeri açıksa kapat, kapalıysa aç
       if (gallery.style.display === 'none' || gallery.style.display === '') {
-        gallery.style.display = 'grid';
+        gallery.style.display = 'flex';
         container.classList.add('open');
       } else {
         gallery.style.display = 'none';
